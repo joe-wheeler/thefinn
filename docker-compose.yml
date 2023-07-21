@@ -144,6 +144,16 @@ services:
     ports:
       - "6767:6767/tcp"
     restart: unless-stopped    
+    
+  cloudflared: 
+    image: cloudflare/cloudflared 
+    container_name: cloudflare-tunnel 
+    restart: unless-stopped 
+    command: tunnel run 
+    environment: 
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+    networks:
+      - arrnet  
 volumes:
   jellyfin_cache:
     external: true
