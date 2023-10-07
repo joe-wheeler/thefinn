@@ -156,6 +156,24 @@ services:
       TUNNEL_TOKEN: ${TUNNEL_TOKEN}
     networks:
       - arrnet  
+
+  db_recipes:
+    image: postgres:15-alpine
+    container_name: db_recipes  
+    environment:
+      - "PUID=1009"
+      - "PGID=1002"
+      - "UMASK=002"
+      - "TZ=America/Denver"  
+    restart: always
+
+    volumes:
+      - "db_recipes_data:/var/lib/postgresql/data"   
+    networks:
+      - arrnet  
+    env_file:
+      - ./.env
+      
 volumes:
   jellyfin_cache:
     external: true
@@ -172,6 +190,8 @@ volumes:
   radarr_config:
     external: true
   bazarr_config:
+    external: true
+  db_recipes_data:
     external: true
 networks:
   arrnet:
